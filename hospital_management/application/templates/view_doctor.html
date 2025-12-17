@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Doctor Profile</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f0f2f5; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .container { width: 100%; max-width: 450px; padding: 2rem; border: 2px solid #333; border-radius: 10px; background-color: #ffffff; }
+        .btn-book { background-color: #28a745; color: white; padding: 0.5rem 1rem; text-decoration: none; border-radius: 5px; font-weight: bold; }
+        .btn-back { color: #333; text-decoration: none; margin-left: 10px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Dr. {{ doctor.full_name }}</h1>
+        <p><strong>Department:</strong> {{ doctor.department.name }}</p>
+        <p><strong>Experience:</strong> {{ doctor.experience_years }} Years</p>
+        <p><strong>Email:</strong> {{ doctor.username }}@hospital.com</p> <div style="margin-top: 2rem; text-align: right;">
+            <a href="{{ url_for('patient.book_appointment', doctor_id=doctor.id) }}" class="btn-book">Book Appointment</a>
+            <a href="{{ url_for('patient.department', dept_id=doctor.department.id) }}" class="btn-back">Go Back</a>
+        </div>
+    </div>
+</body>
+</html>

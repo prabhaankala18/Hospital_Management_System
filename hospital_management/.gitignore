@@ -1,0 +1,7 @@
+git rm -r --cached venv
+2.  Add your new `.gitignore` file:
+```bash
+git add .gitignore
+3.  Commit these changes:
+```bash
+git commit -m "Ignoring venv folder"

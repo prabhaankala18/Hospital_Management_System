@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Update Patient History</title>
+    <style>
+        /* Styles adapted from wireframe */
+        body { font-family: Arial, sans-serif; background-color: #f0f2f5; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .container { width: 100%; max-width: 600px; padding: 2rem; border: 1px solid #ccc; border-radius: 10px; background-color: #ffffff; }
+        .container h1 { font-size: 1.5rem; margin-top: 0; margin-bottom: 0.5rem; color: #333; }
+        .patient-info { margin-bottom: 1.5rem; border: 1px solid #f0f0f0; padding: 10px; border-radius: 5px;}
+        .form-box { padding: 1.5rem; border: 1px solid #ccc; border-radius: 8px; }
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+        .form-group.full-width { grid-column: 1 / -1; }
+        .form-group label { display: block; margin-bottom: 0.5rem; font-weight: bold; color: #555; }
+        .form-group input, .form-group textarea { width: 100%; padding: 0.75rem; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
+        .form-footer { text-align: right; margin-top: 1.5rem; }
+        .btn-save { background-color: #28a745; color: white; padding: 0.5rem 1rem; border: none; border-radius: 5px; cursor: pointer; }
+        .medicines-box { border: 1px solid #ccc; border-radius: 4px; padding: 0.75rem; background-color: #f9f9f9; font-family: monospace; white-space: pre-wrap; min-height: 120px; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Update Patient History</h1>
+        
+        <div class="patient-info">
+            <p><strong>Patient Name:</strong> Mr. {{ appointment.patient.full_name if appointment.patient.full_name else appointment.patient.username }}</p>
+            <p><strong>Department:</strong> {{ appointment.doctor.department.name }}</p>
+        </div>
+
+        <form action="{{ url_for('doctor.update_history', appointment_id=appointment.id) }}" method="POST">
+            <div class="form-box">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="visit-type">Visit Type</label>
+                        <input type="text" id="visit-type" name="visit-type" value="In-person" disabled>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="test-done">Test Done</label>
+                        <input type="text" id="test-done" name="test-done" value="ECG" disabled>
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label for="diagnosis">Diagnosis</label>
+                        <textarea id="diagnosis" name="diagnosis" required>{{ treatment.diagnosis if treatment else '' }}</textarea>
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label for="prescription">Prescription</label>
+                        <textarea id="prescription" name="prescription" required>{{ treatment.prescription if treatment else '' }}</textarea>
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label for="medicines">Medicines</label>
+                        <textarea id="medicines" name="medicines">{{ treatment.medicines if treatment else 'Medicine Name | Dose | Frequency (e.g., 1-0-1)' }}</textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-footer">
+                <button type="submit" class="btn-save">save</button>
+            </div>
+        </form>
+    </div>
+
+</body>
+</html>

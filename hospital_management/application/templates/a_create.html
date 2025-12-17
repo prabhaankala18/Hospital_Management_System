@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add New Doctor</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f0f2f5; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .container { width: 100%; max-width: 450px; padding: 2rem; border: 2px solid #333; border-radius: 10px; background-color: #f9f9f9; }
+        .container h1 { font-size: 1.5rem; margin-top: 0; margin-bottom: 1.5rem; color: #333; }
+        .form-box { background-color: #ffffff; padding: 2rem; border-radius: 15px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); border: 1px solid #ddd; }
+        .form-group { margin-bottom: 1.5rem; text-align: left; }
+        .form-group label { display: block; margin-bottom: 0.5rem; font-size: 0.9rem; color: #555; }
+        .form-group input { width: 100%; padding: 0.75rem; border: 1px solid #ccc; border-radius: 8px; box-sizing: border-box; }
+        .form-footer { text-align: right; margin-top: 1.5rem; }
+        .btn-create { border: 2px solid #28a745; background-color: #d4edda; border-radius: 5px; padding: 0.5rem 1rem; font-weight: bold; cursor: pointer; font-size: 1rem; }
+        
+        /* Flash Messages */
+        .alert { padding: 10px; margin-bottom: 15px; border-radius: 5px; }
+        .alert-danger { background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Add a new Doctor</h1>
+        
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            {% for category, message in messages %}
+              <div class="alert alert-{{ category }}">{{ message }}</div>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
+
+        <div class="form-box">
+            <form action="{{ url_for('admin.create_doctor') }}" method="POST">
+                <div class="form-group">
+                    <label for="fullname">Fullname</label>
+                    <input type="text" id="fullname" name="fullname" required>
+                </div>
+                <div class="form-group">
+                    <label for="specialization">Specialization/Department</label>
+                    <input type="text" id="specialization" name="specialization" required>
+                </div>
+                <div class="form-group">
+                    <label for="experience">Experience (years)</label>
+                    <input type="number" id="experience" name="experience" required>
+                </div>
+                
+                <div class="form-footer">
+                    <button type="submit" class="btn-create">Create</button>
+                </div>
+                <div class="form-footer">
+    <a href="{{ url_for('admin.dashboard') }}" style="text-decoration:none; color:#333; margin-right:15px; font-size:0.9rem;">Cancel</a>
+    
+    <button type="submit" class="btn-create">Create</button>
+</div>
+            </form>
+        </div>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Patient History</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f0f2f5; display: flex; justify-content: center; align-items: center; padding: 2rem; min-height: 100vh; }
+        .container { width: 100%; max-width: 800px; padding: 2rem; border: 2px solid #333; border-radius: 10px; background-color: #ffffff; }
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
+        .btn-back { border: 2px solid #007bff; background-color: #cce5ff; border-radius: 5px; padding: 0.5rem 1rem; font-weight: bold; cursor: pointer; text-decoration: none; color: black; }
+        .history-table { width: 100%; border-collapse: collapse; border: 2px solid #333; margin-top: 1rem;}
+        .history-table th, .history-table td { border: 1px solid #333; padding: 0.75rem; text-align: left; font-size: 0.9rem; }
+        .history-table thead { background-color: #f8f9fa; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>My Medical History</h1>
+            <a href="{{ url_for('patient.dashboard') }}" class="btn-back">Back to Dashboard</a>
+        </div>
+        
+        <table class="history-table">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Doctor</th>
+                    <th>Diagnosis</th>
+                    <th>Prescription</th>
+                    <th>Medicines</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if treatments %}
+                    {% for t in treatments %}
+                    <tr>
+                        <td>{{ t.appointment.appointment_date }}</td>
+                        <td>Dr. {{ t.appointment.doctor.full_name }}</td>
+                        <td>{{ t.diagnosis }}</td>
+                        <td>{{ t.prescription }}</td>
+                        <td>{{ t.medicines }}</td>
+                    </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="5" style="text-align:center;">No medical history records found.</td>
+                    </tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

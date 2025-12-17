@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Patient History</title>
+    <style>
+        /* Styles adapted from doc_view.html/a_view.html */
+        body { font-family: Arial, sans-serif; background-color: #f0f2f5; display: flex; justify-content: center; align-items: center; padding: 2rem; min-height: 100vh; }
+        .container { width: 100%; max-width: 900px; padding: 2rem; border: 2px solid #333; border-radius: 10px; background-color: #ffffff; }
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
+        .history-table { width: 100%; border-collapse: collapse; border: 2px solid #333; }
+        .history-table th, .history-table td { border: 1px solid #333; padding: 0.75rem; text-align: left; font-size: 0.9rem; }
+        .history-table thead { background-color: #f8f9fa; }
+        .btn-back { background-color: #e0e0e0; border: 1px solid #ccc; padding: 8px 15px; border-radius: 5px; cursor: pointer; text-decoration: none; color: #333; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="header">
+            <h1>Patient History</h1>
+            <a href="{{ url_for('admin.dashboard') }}" class="btn-back">back</a>
+        </div>
+        
+        <div class="patient-info">
+            <p><strong>Patient Name:</strong> Mr. {{ patient.full_name if patient.full_name else patient.username }}</p>
+        </div>
+
+        <table class="history-table">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Doctor Name</th>
+                    <th>Diagnosis</th>
+                    <th>Prescription</th>
+                    <th>Medicines</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if treatments %}
+                    {% for t in treatments %}
+                    <tr>
+                        <td>{{ t.appointment.appointment_date }}</td>
+                        <td>Dr. {{ t.appointment.doctor.full_name }}</td>
+                        <td>{{ t.diagnosis }}</td>
+                        <td>{{ t.prescription }}</td>
+                        <td>{{ t.medicines }}</td>
+                    </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="5" style="text-align:center;">No completed visit history found.</td>
+                    </tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+
+</body>
+</html>
